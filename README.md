@@ -1,2 +1,4 @@
 # mern-marketplace
-node/mongoDB/react/redux/scss
+use 'npm run dev' from root app for start server/client
+
+mongoDB/express/react/redux/scss/nodeJS
