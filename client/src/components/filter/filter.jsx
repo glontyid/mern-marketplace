@@ -35,7 +35,7 @@ const Filter = ({categories, productsFilter}) => {
       </div>
       <div className="filter__sale">
         <input className="filter__sale-checkbox" type="checkbox" ref={checkbox} name="sale" id="sale" onChange={ e => saleHandler(e.target.checked) }/>
-        <label htmlFor="sale">Товары со скидками</label>
+        <label htmlFor="sale">Товары со скидкой</label>
       </div>
     </div>
   )

@@ -36,18 +36,39 @@
       justify-content: space-between;
       align-items: center;
 
+      &-inner {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        & span {
+          margin-left: 10px;
+          color: red;
+        }
+      }
+
       button {
         display: flex;
         height: 27px;
         border: 1px solid #ccc;
         background-color: #fff;
         padding: 5px 10px;
-        cursor: pointer;
         transition: border-color .2s ease-in-out;
       }
 
       button:hover {
         border-color: #000;
+      }
+
+      button.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: .5;
+      }
+
+      button.enabled {
+        cursor: pointer;
+        opacity: 1;
       }
     }
   } 

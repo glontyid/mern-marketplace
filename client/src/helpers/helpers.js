@@ -29,7 +29,7 @@ export function cartProductCheck(id) {
 }
 
 export function getItemsFromStorage() {
-  const userId = JSON.parse(localStorage.getItem('userData')).userId
+  const userId = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).userId : '';
 
   return localStorage.getItem(`cartProducts-${userId}`) ? localStorage.getItem(`cartProducts-${userId}`).split(',') : [];
 }

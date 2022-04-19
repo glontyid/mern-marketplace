@@ -7,9 +7,14 @@ import './auth-page.scss';
 const AuthPage = () => {
   const [form, setForm] = useState({email:'', password:''});
   const {login, logout} = useContext(AuthContext);
+  const [loginError, setLoginError] = useState(false);
+  const hasLogin = form.email,
+        hasPassword = form.password;
+
   const changeHandler = (event) => {
     setForm({...form, [event.target.name]: event.target.value})
   }
+
   const registrationHandler = async () => {
     try {
       await axios.post('/api/auth/registration', {
@@ -19,6 +24,7 @@ const AuthPage = () => {
         window.location.href = '/login'
       })    
     } catch (error) {
+      errorHandler();
       console.log(error)
     }
   }
@@ -33,7 +39,16 @@ const AuthPage = () => {
       })   
     } catch (error) {
       console.log(error)
+      errorHandler()
     }
+  }
+
+  function errorHandler() {
+    setLoginError(true)
+
+    setTimeout(() => {
+      setLoginError(false)
+    }, 4000)
   }
 
   return (
@@ -52,7 +67,10 @@ const AuthPage = () => {
                     <input type="password" name="password" onChange={changeHandler} />
                   </div>
                   <div className='auth-form__button-wrapper'>
-                    <button type="submit" onClick={loginHandler}>Войти</button>
+                    <div className='auth-form__button-wrapper-inner'>
+                      <button type="submit" className={hasLogin && hasPassword ? 'enabled' : 'disabled'} onClick={loginHandler}>Войти</button>
+                      { loginError ? <span>Ошибка</span> : false }
+                    </div>
                     <Link to='/registration'>Зарегистрироваться</Link>
                   </div>
                 </form>
@@ -67,7 +85,10 @@ const AuthPage = () => {
                     <input type="password" name="password" onChange={changeHandler} />
                   </div>
                   <div className='auth-form__button-wrapper'>
-                    <button type="submit" onClick={registrationHandler}>Зарегистрироваться</button>
+                    <div className='auth-form__button-wrapper-inner'>
+                      <button type="submit" className={hasLogin && hasPassword ? 'enabled' : 'disabled'} onClick={registrationHandler}>Зарегистрироваться</button>
+                      { loginError ? <span>Ошибка</span> : false }
+                    </div>
                     <Link to='/login'>уже есть аккаунт?</Link>  
                   </div>
                 </form>
