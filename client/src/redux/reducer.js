@@ -52,6 +52,11 @@ export const marketReducer = (state = initialState, action) => {
         ...state,
         selectedProduct: action.payload
       }
+    case (MARKET_ACTIONS.ADD_TO_DB):
+      return {
+        ...state,
+        catalogProducts: [...state.catalogProducts, action.payload]
+      }
     default: return state
   }
 }

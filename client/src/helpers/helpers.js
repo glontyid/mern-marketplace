@@ -11,7 +11,7 @@ export function unique(arr) {
 }
 
 export function cartSum(cartProducts) {
-  const productsPrice = cartProducts.map((product) => product.price)
+  const productsPrice = cartProducts.map((product) => +product.price)
 
   return productsPrice.reduce((acc, cur) => {
     return acc + cur

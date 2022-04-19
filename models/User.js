@@ -21,6 +21,9 @@ const schema = new Schema({
   },
   cart: { 
     type: "array"
+  },
+  admin: {
+    type: Boolean,
   }
 })
 

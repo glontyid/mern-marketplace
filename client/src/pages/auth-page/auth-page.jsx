@@ -5,14 +5,18 @@ import { AuthContext } from '../../context/auth-context';
 import './auth-page.scss';
 
 const AuthPage = () => {
-  const [form, setForm] = useState({email:'', password:''});
+  const [form, setForm] = useState({email:'', password:'', admin: false});
   const {login, logout} = useContext(AuthContext);
   const [loginError, setLoginError] = useState(false);
   const hasLogin = form.email,
         hasPassword = form.password;
 
-  const changeHandler = (event) => {
+  const inputHandler = (event) => {
     setForm({...form, [event.target.name]: event.target.value})
+  }
+
+  const checkboxHandler = (event) => {
+    setForm({...form, [event.target.name]: event.target.checked})
   }
 
   const registrationHandler = async () => {
@@ -35,7 +39,7 @@ const AuthPage = () => {
         ...form,
         headers: {contentType: 'application/json'}
       }).then(resp => {
-        login(resp.data.token, resp.data.userId)
+        login(resp.data.token, resp.data.userId, resp.data.isAdmin)
       })   
     } catch (error) {
       console.log(error)
@@ -61,10 +65,10 @@ const AuthPage = () => {
                 <h3>Авторизация</h3>
                 <form className='auth-form' onSubmit={e => e.preventDefault()}>
                   <div className='auth-form__input-wrapper'>
-                    <input type="text" name="email" onChange={changeHandler} />
+                    <input type="text" name="email" onChange={inputHandler} />
                   </div>
                   <div className='auth-form__input-wrapper'>
-                    <input type="password" name="password" onChange={changeHandler} />
+                    <input type="password" name="password" onChange={inputHandler} />
                   </div>
                   <div className='auth-form__button-wrapper'>
                     <div className='auth-form__button-wrapper-inner'>
@@ -79,10 +83,14 @@ const AuthPage = () => {
                 <h3>Регистрация</h3>
                 <form className='auth-form' onSubmit={e => e.preventDefault()}>
                   <div className='auth-form__input-wrapper'>
-                    <input type="email" name="email" onChange={changeHandler} />
+                    <input type="email" name="email" onChange={inputHandler} />
                   </div>
                   <div className='auth-form__input-wrapper'>
-                    <input type="password" name="password" onChange={changeHandler} />
+                    <input type="password" name="password" onChange={inputHandler} />
+                  </div>
+                  <div className='auth-form__input-wrapper'>
+                    <input className="auth-form__input-wrapper-checkbox" type="checkbox" name="admin" id="admin" onChange={checkboxHandler}/>
+                    <label htmlFor="admin">Администратор</label>
                   </div>
                   <div className='auth-form__button-wrapper'>
                     <div className='auth-form__button-wrapper-inner'>

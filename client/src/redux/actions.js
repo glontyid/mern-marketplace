@@ -7,3 +7,4 @@ export const getCartItems = (ids) => ({type: MARKET_ACTIONS.GET_CART_ITEMS, payl
 export const clearCartItems = () => ({type: MARKET_ACTIONS.CLEAR_CART_ITEMS})
 export const getCatalogItems = (products) => ({type: MARKET_ACTIONS.GET_CATALOG_ITEMS, payload: products})
 export const viewProduct = (product) => ({type: MARKET_ACTIONS.VIEW_PRODUCT, payload: product})
+export const addToDB = (product) => ({type: MARKET_ACTIONS.ADD_TO_DB, payload: product})

@@ -18,7 +18,7 @@ async (req, res) => {
       return res.status(400).json({errors: errors.array(), message: 'некорректные данные при регистрации'});
     }
 
-    const {email, password} = req.body;
+    const {email, password, admin} = req.body;
     const isUsed = await User.findOne({email: email});
 
     if (isUsed) {
@@ -28,7 +28,7 @@ async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12)
 
     const user = new User({
-      email, password: hashedPassword, fullName: 'Зебра', gender: 'male', age: 0
+      email, password: hashedPassword, fullName: 'Зебра', gender: 'male', age: 0, admin: admin
     })
 
     await user.save()
@@ -64,15 +64,18 @@ async (req, res) => {
       return res.status(400).json({message: 'пароли не совпадают'})
     }
 
-    const jwtSecret = 'djsh1kh1kdhk1hwk1hk2h12dh12jdh1khd'
+    const jwtSecret = 'djsh1kh1kdhk1hwk1hk2h12dh12jdh1khd';
 
     const token = jwtToken.sign(
-      {userId: user.id},
+      {
+        userId: user.id,
+        isAdmin: user.admin
+      },
       jwtSecret,
       {expiresIn: '1h'}
     )
 
-    res.json({token, userId: user.id})
+    res.json({token, userId: user.id, isAdmin: user.admin})
     
   } catch (err) {
     console.log(err);

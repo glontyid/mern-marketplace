@@ -1,6 +1,6 @@
 import React from 'react';
 import './aside-menu.scss';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 const AsideMenu = () => {

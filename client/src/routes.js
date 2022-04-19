@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 import {Switch, Route, Redirect} from 'react-router-dom';
+import AdminPage from './pages/admin-page/admin-page';
 import AuthPage from './pages/auth-page/auth-page';
 import CartPage from './pages/cart-page/cart-page';
 import MainPage from './pages/main-page/main-page';
@@ -25,6 +26,9 @@ const useRoutes = (isLogin) => {
         </Route>
         <Route path="/cart" exact>
           <CartPage />
+        </Route>
+        <Route path="/admin" exact>
+          <AdminPage />
         </Route>
         <Redirect to="/" />
       </Switch>

@@ -10,6 +10,7 @@ app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/catalog', require('./routes/catalog.route'));
 app.use('/api/cart', require('./routes/cart.route'));
 app.use('/api/profile', require('./routes/profile.route'));
+app.use('/api/admin', require('./routes/admin.route'));
 
 async function start() {
   try {

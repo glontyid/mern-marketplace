@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { getCatalogItems } from './redux/actions';
 
 function App() {
-  const {login, logout, token, userId, isReady} = useAuth();
+  const {login, logout, token, userId, isReady, admin} = useAuth();
   const isLogin = !!token;
   const routes = useRoutes(isLogin);
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function App() {
   }, [dispatch])
 
   return (
-    <AuthContext.Provider value={{login, logout, token, userId, isReady, isLogin}}>
+    <AuthContext.Provider value={{login, logout, token, userId, isReady, isLogin, admin}}>
       <div className="app">
         <BrowserRouter>
           {
