@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../cart.scss';
 import {useDispatch} from "react-redux";
 import {removeFromCart} from "../../../redux/actions";
 import {removeFromCartFn} from "../../../helpers/helpers";
+import Preloader from '../../common/preloader/preloader';
 
 const CartItem = ({data}) => {
   const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   function removeCartItem(id) {
     dispatch(removeFromCart(id))
-    removeFromCartFn(data.id)
+    removeFromCartFn(id)
   }
 
   return (
     <div className="cart-item">
       <div className="cart-item__image">
-        <img src={data.image} alt={data.title}/>
+        { !isLoaded ? <Preloader/> : false }
+        <img 
+          src={data.image} 
+          className={!isLoaded ? 'cart-item__image-loading' : 'cart-item__image-loaded'} 
+          alt={data.title}
+          onLoad={() => setIsLoaded(true)}
+        />
       </div>
       <div className="cart-item__description">
         <div className="cart-item__category">{data.category}</div>

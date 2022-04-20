@@ -8,7 +8,7 @@ import MainPage from './pages/main-page/main-page';
 import ProductPage from './pages/product-page/product-page';
 import ProfilePage from './pages/profile-page/profile-page';
 
-const useRoutes = (isLogin) => {
+const useRoutes = (isLogin, admin) => {
   const product = useSelector(state => state.marketReducer.selectedProduct);
   const products = useSelector(state => state.marketReducer.catalogProducts);
 
@@ -27,9 +27,11 @@ const useRoutes = (isLogin) => {
         <Route path="/cart" exact>
           <CartPage />
         </Route>
+        { admin ? 
         <Route path="/admin" exact>
           <AdminPage />
         </Route>
+        : false }
         <Redirect to="/" />
       </Switch>
     )

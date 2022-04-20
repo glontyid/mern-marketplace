@@ -69,3 +69,27 @@ export function getProductsId(products) {
     return product.id
   })
 }
+
+export function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+export function isImgLink(url) {
+  if (typeof url !== 'string') {
+    return false;
+  }
+
+  return (url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) !== null);
+}
+
+export function adminFormValidator(title, category, price, description, image) {
+  let hasTitle = title.length > 0 ? true : false;
+  let hasPrice = +price > 0 ? true : false;
+  let hasDescription = description.length ? true : false;
+  let hasCategory = category.length ? true : false;
+  let hasImage = isImgLink(image);
+
+  if (hasTitle, hasPrice, hasDescription, hasCategory, hasImage) return true
+
+  return false
+}

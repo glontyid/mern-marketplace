@@ -81,7 +81,7 @@ const Profile = () => {
           </div>
           <div className="form__input-field">
             <label htmlFor="gender">Пол</label>
-            <select type="text" name="gender" defaultValue="male" onChange={ e => changeInputHandler(e) }>
+            <select type="text" name="gender" defaultValue={form.gender} onChange={ e => changeInputHandler(e) }>
               <option value="male">Муж</option>
               <option value="female">Жен</option>
             </select>

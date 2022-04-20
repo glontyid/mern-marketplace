@@ -5,7 +5,7 @@ import App from './App';
 import {Provider} from "react-redux";
 import {store} from "./redux/store"
 
-const root = createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root'), {identifierPrefix: 'id-'})
 
 root.render(
   <Provider store={store}>

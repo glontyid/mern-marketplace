@@ -45,7 +45,7 @@ const CatalogItem = ({data}) => {
           </div>
           <div className="catalog__product-price">
             ${data.price} 
-            { data.oldPrice ? <span className="catalog__product-price-old">${data.oldPrice}</span> : false }
+            { data.oldPrice > data.price ? <span className="catalog__product-price-old">${data.oldPrice}</span> : false }
           </div>
         </div>
       </Link>

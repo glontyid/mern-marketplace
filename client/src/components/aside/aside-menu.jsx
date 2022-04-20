@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './aside-menu.scss';
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItemsFromStorage } from '../../helpers/helpers';
+import { getCartItems } from '../../redux/actions';
 
 const AsideMenu = () => {
+  const dispatch = useDispatch();
+  const cartItems = getItemsFromStorage() || [];
+
+  useEffect(() => {
+    dispatch(getCartItems(cartItems))
+  }, [dispatch, cartItems])
+
   const cartProductsCount = useSelector((state) => state.marketReducer.cartItems.length);
 
   return (

@@ -8,11 +8,12 @@ import {useAuth} from './hooks/auth-hook';
 import Navbar from './components/navbar/navbar';
 import { useDispatch } from 'react-redux';
 import { getCatalogItems } from './redux/actions';
+import Preloader from './components/common/preloader/preloader';
 
 function App() {
   const {login, logout, token, userId, isReady, admin} = useAuth();
   const isLogin = !!token;
-  const routes = useRoutes(isLogin);
+  const routes = useRoutes(isLogin, admin);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -39,7 +40,7 @@ function App() {
                 {routes}    
               </div>
             </React.Fragment>
-          : 'загрузка'
+          : <Preloader/>
           }
         </BrowserRouter>
       </div>

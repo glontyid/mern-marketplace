@@ -6,7 +6,7 @@ router.post('/add', async (req, res) => {
   try {
     const {id, title, price, oldPrice, description, category, image, rating: {rate, count}} = req.body;
     const newProduct = new Product({
-      id: +id, 
+      id: id, 
       title: title, 
       price: +price, 
       oldPrice: +oldPrice, 

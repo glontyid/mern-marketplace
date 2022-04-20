@@ -31,8 +31,8 @@ const Catalog = ({products}) => {
       />
       <div className="catalog">
         {
-        filteredProducts.map(product => {
-          return <CatalogItem data={product} key={product._id}/>
+        filteredProducts.map((product, index) => {
+          return <CatalogItem data={product} key={index}/>
         })
         }
       </div>
