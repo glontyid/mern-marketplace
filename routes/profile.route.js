@@ -2,7 +2,7 @@ const {Router} = require('express');
 const router = Router();
 const User = require('../models/User');
 const Product = require('../models/Product');
-const {check, validationResult} = require('express-validator');
+const {check} = require('express-validator');
 const bcrypt = require('bcryptjs');
 
 router.get('/get/:id', async (req, res) => {
@@ -48,7 +48,7 @@ async (req, res) => {
   }
 })
 
-router.get('/story', async (req, res) => {
+router.get('/history', async (req, res) => {
   try {
     const products = await Product.find({id: {$in : req.query.cart}});
     

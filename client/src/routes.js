@@ -29,7 +29,7 @@ const useRoutes = (isLogin, admin) => {
         </Route>
         { admin ? 
         <Route path="/admin" exact>
-          <AdminPage />
+          <AdminPage products={products} />
         </Route>
         : false }
         <Redirect to="/" />

@@ -29,7 +29,9 @@ const Profile = () => {
         age: response.data.age
       })
 
-      axios.get(`/api/profile/story`, {params: {cart: response.data.cart}}, {headers: {contentType: 'application/json'}})
+      console.log(response.data)
+
+      axios.get(`/api/profile/history`, {params: {cart: response.data.cart}}, {headers: {contentType: 'application/json'}})
       .then(resp => {
         setCart(resp.data)
       })
@@ -53,7 +55,6 @@ const Profile = () => {
       })
     } catch (error) {
       statusHandler('error')
-      console.log(error)
     }
   }, [userId, form])
 

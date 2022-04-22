@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="logo">LOGO</div>
       { isLogin ? 
       <div className="navbar__menu">
-      { admin ? <Link to="/admin/" className="btn btn-profile">Добавить товар в базу</Link> : false }
+      { admin ? <Link to="/admin/" className="btn btn-profile">Админ панель</Link> : false }
       <Link to="/" className="btn btn-profile">Главная</Link>
       <Link to="/profile" className="btn btn-profile">Профиль</Link>
       <button className="btn btn-logout" onClick={logout}>Выйти</button> 
