@@ -14,34 +14,15 @@ function App() {
   const {login, logout, token, userId, isReady, admin} = useAuth();
   const isLogin = !!token;
   const routes = useRoutes(isLogin, admin);
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    try {
-      axios.get('/api/catalog/get', {headers: {contentType: 'application/json'}}).then(resp => {
-        dispatch(getCatalogItems(resp.data));
-        setIsLoaded(true);
-      })   
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch])
 
   return (
     <AuthContext.Provider value={{login, logout, token, userId, isReady, isLogin, admin}}>
       <div className="app">
         <BrowserRouter>
-          {
-          isLoaded ?
-            <React.Fragment>
-              <Navbar />
-              <div className="app-content">
-                {routes}    
-              </div>
-            </React.Fragment>
-          : <Preloader/>
-          }
+          <Navbar />
+          <div className="app-content">
+            {routes}    
+          </div>
         </BrowserRouter>
       </div>
     </AuthContext.Provider>

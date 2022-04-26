@@ -27,4 +27,34 @@ router.post('/add', async (req, res) => {
   }
 })
 
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    await Product.deleteOne({id: req.params.id});
+
+    res.status(200).json({message: 'товар добавлен'})
+  } catch (err) {
+    res.status(404).json({message: err.message});
+  }
+})
+
+router.put('/change/:id', async (req, res) => {
+  try {
+    const product = await Product.findOne({id: req.params.id});
+    const {title, price, oldPrice, description, category, image} = req.body;
+
+    product.title = title;
+    product.price = price;
+    product.oldPrice = oldPrice;
+    product.description = description;
+    product.category = category;
+    product.image = image;
+
+    await product.save();
+
+    res.status(200).json({message: 'товар изменён'})
+  } catch (err) {
+    res.status(404).json({message: err.message});
+  }
+})
+
 module.exports = router

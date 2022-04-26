@@ -1,38 +1,51 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Switch, Route, Redirect} from 'react-router-dom';
+import Preloader from './components/common/preloader/preloader';
 import AdminPage from './pages/admin-page/admin-page';
 import AuthPage from './pages/auth-page/auth-page';
 import CartPage from './pages/cart-page/cart-page';
 import MainPage from './pages/main-page/main-page';
 import ProductPage from './pages/product-page/product-page';
 import ProfilePage from './pages/profile-page/profile-page';
+import { getCatalogItems } from './redux/actions';
 
 const useRoutes = (isLogin, admin) => {
+  const dispatch = useDispatch();
   const product = useSelector(state => state.marketReducer.selectedProduct);
   const products = useSelector(state => state.marketReducer.catalogProducts);
+  const loading = useSelector(state => state.marketReducer.loading);
+
+  useEffect(() => {
+    dispatch(getCatalogItems())
+  }, [])
 
   if (isLogin) {
     return (
       <Switch>
-        <Route path="/" exact>
-          <MainPage products={products} />
-        </Route>
-        <Route path="/catalog/:id">
-          <ProductPage product={product} products={products} />
-        </Route>
-        <Route path="/profile" exact>
-          <ProfilePage products={products} />
-        </Route>
-        <Route path="/cart" exact>
-          <CartPage />
-        </Route>
-        { admin ? 
-        <Route path="/admin" exact>
-          <AdminPage products={products} />
-        </Route>
-        : false }
-        <Redirect to="/" />
+        { !loading && products.length ?
+        <React.Fragment>
+          <Route path="/" exact>
+            <MainPage products={products} />
+          </Route>
+          <Route path="/catalog/:id">
+            <ProductPage product={product} products={products} />
+          </Route>
+          <Route path="/profile" exact>
+            <ProfilePage products={products} />
+          </Route>
+          <Route path="/cart" exact>
+            <CartPage />
+          </Route>
+          { admin ? 
+          <Route path="/admin" exact>
+            <AdminPage products={products} />
+          </Route>
+          : false }
+          <Redirect to="/" />
+        </React.Fragment>
+        : <Preloader/>
+        }
       </Switch>
     )
   }

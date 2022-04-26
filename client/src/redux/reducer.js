@@ -1,10 +1,11 @@
 import { getItemsFromStorage } from "../helpers/helpers";
-import {MARKET_ACTIONS} from "./variables";
+import { MARKET_ACTIONS } from "./variables";
 
 const initialState = {
   catalogProducts: [],
   cartItems: getItemsFromStorage() || [],
-  selectedProduct: null
+  selectedProduct: null,
+  loading: false
 }
 
 export const marketReducer = (state = initialState, action) => {
@@ -56,6 +57,35 @@ export const marketReducer = (state = initialState, action) => {
       return {
         ...state,
         catalogProducts: [...state.catalogProducts, action.payload]
+      }
+    case (MARKET_ACTIONS.REMOVE_FROM_DB):
+      return {
+        ...state,
+        catalogProducts: state.catalogProducts.filter(item => {
+          return item.id !== action.payload
+        })
+      }
+    case (MARKET_ACTIONS.CHANGE_CATALOG_ITEM):
+      return {
+        ...state,
+        catalogProducts: state.catalogProducts.map(item => {
+          if (item.id === action.payload.id) {
+            return action.payload
+          }
+
+          return item
+        })
+      }
+    case (MARKET_ACTIONS.LOADER_ON):
+      return {
+        ...state,
+        loading: true
+      }
+
+    case (MARKET_ACTIONS.LOADER_OFF):
+      return {
+        ...state,
+        loading: false
       }
     default: return state
   }
