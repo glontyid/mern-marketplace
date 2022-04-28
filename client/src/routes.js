@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Switch, Route, Redirect} from 'react-router-dom';
+import Product from './components/product/product';
 import Preloader from './components/common/preloader/preloader';
 import AdminPage from './pages/admin-page/admin-page';
 import AuthPage from './pages/auth-page/auth-page';
@@ -12,7 +13,6 @@ import { getCatalogItems } from './redux/actions';
 
 const useRoutes = (isLogin, admin) => {
   const dispatch = useDispatch();
-  const product = useSelector(state => state.marketReducer.selectedProduct);
   const products = useSelector(state => state.marketReducer.catalogProducts);
   const loading = useSelector(state => state.marketReducer.loading);
 
@@ -22,14 +22,14 @@ const useRoutes = (isLogin, admin) => {
 
   if (isLogin) {
     return (
-      <Switch>
+      <React.Fragment>
         { !loading && products.length ?
         <React.Fragment>
-          <Route path="/" exact>
+          <Route path="/catalog" exact>
             <MainPage products={products} />
           </Route>
-          <Route path="/catalog/:id">
-            <ProductPage product={product} products={products} />
+          <Route path="/catalog/:id" exact>
+            <ProductPage products={products} />
           </Route>
           <Route path="/profile" exact>
             <ProfilePage products={products} />
@@ -42,11 +42,11 @@ const useRoutes = (isLogin, admin) => {
             <AdminPage products={products} />
           </Route>
           : false }
-          <Redirect to="/" />
+          <Redirect from="/login" to="/catalog" />
         </React.Fragment>
         : <Preloader/>
         }
-      </Switch>
+      </React.Fragment>
     )
   }
 

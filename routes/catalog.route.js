@@ -11,6 +11,16 @@ router.get('/get', async (req, res) => {
   }
 })
 
+router.get('/:id', async (req, res) => {
+  try {
+    const product = await Product.findOne({id: req.params.id});
+
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(404).json({message: err.message});
+  }
+})
+
 router.post('/catalog', (req, res) => {
   try {
     res.send('product created')

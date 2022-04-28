@@ -7,8 +7,9 @@ import { removeFromCartFn, addToCartFn, cartProductCheck } from '../../../helper
 import Preloader from '../../common/preloader/preloader';
 
 const CatalogItem = ({data}) => {
+  const {title, image, price, oldPrice, id} = data;
   const dispatch = useDispatch();
-  const [added, setAdded] = useState(cartProductCheck(data.id));
+  const [added, setAdded] = useState(cartProductCheck(id));
   const [isLoaded, setIsLoaded] = useState(false);
 
   function viewProductHandler() {
@@ -17,25 +18,25 @@ const CatalogItem = ({data}) => {
 
   function addCartHandler() {
     dispatch(addToCart(data))
-    addToCartFn(data.id)
+    addToCartFn(id)
     setAdded(true)
   }
 
   function removeCartHandler() {
-    dispatch(removeFromCart(data.id))
-    removeFromCartFn(data.id)
+    dispatch(removeFromCart(id))
+    removeFromCartFn(id)
     setAdded(false)
   }
 
   return (
     <div className="catalog__product">
-      <Link to={`/catalog/${data.id}`} className="catalog__product-link" onClick={() => viewProductHandler()}>
+      <Link to={`/catalog/${id}`} className="catalog__product-link" onClick={() => viewProductHandler()}>
         <div className="catalog__product-image">
           { !isLoaded ? <Preloader/> : false }
           <img 
-            src={data.image} 
+            src={image} 
             className={!isLoaded ? 'catalog__product-image__loading' : 'catalog__product-image__loaded'} 
-            alt={data.title} 
+            alt={title} 
             onLoad={() => setIsLoaded(true)} 
           />
         </div>
@@ -44,8 +45,8 @@ const CatalogItem = ({data}) => {
             {data.title}
           </div>
           <div className="catalog__product-price">
-            ${data.price} 
-            { data.oldPrice > data.price ? <span className="catalog__product-price-old">${data.oldPrice}</span> : false }
+            ${price} 
+            { oldPrice > price ? <span className="catalog__product-price-old">${oldPrice}</span> : false }
           </div>
         </div>
       </Link>
@@ -53,7 +54,7 @@ const CatalogItem = ({data}) => {
         <button
           type="button"
           className="catalog__product-cart"
-          onClick={() => addCartHandler(data.id)}>
+          onClick={() => addCartHandler(id)}>
           Добавить в корзину
         </button>
         :

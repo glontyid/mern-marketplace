@@ -1,39 +1,58 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { addToCartFn, cartProductCheck, removeFromCartFn } from '../../helpers/helpers';
 import { addToCart, removeFromCart } from '../../redux/actions';
 import Preloader from '../common/preloader/preloader';
 import './product.scss';
 
-const Product = ({data}) => {
-  const [added, setAdded] = useState(cartProductCheck(data.id));
-  const dispatch = useDispatch();
+const Product = () => {
+  const {id} = useParams();
+  const [product, setProduct] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const dispatch = useDispatch();
+  const [added, setAdded] = useState(cartProductCheck(id));
+
+  useEffect(() => {
+    try {
+      axios.get(`/api/catalog/${id}`, 
+      {id}, 
+      {headers: {'Content-Type': 'application/json'}})
+      .then(resp => {
+        setProduct(resp.data)
+      })
+    } catch (error) {
+      console.log('error:', error)
+    }
+  }, [id])
 
   function addCartHandler() {
-    dispatch(addToCart(data))
-    addToCartFn(data.id)
+    dispatch(addToCart(id))
+    addToCartFn(id)
     setAdded(true)
   }
 
   function removeCartHandler() {
-    dispatch(removeFromCart(data.id))
-    removeFromCartFn(data.id)
+    dispatch(removeFromCart(id))
+    removeFromCartFn(id)
     setAdded(false)
   }
 
   return (
     <div className="product">
+      { product ?
+      <React.Fragment>
       <div className="product__image">
         { !isLoaded ? <Preloader/> : false }
-        <img src={data.image} className={isLoaded ? 'product__image-loaded' : 'product__image-loading'} onLoad={() => setIsLoaded(true)} alt={data.title} />
+        <img src={product.image} className={isLoaded ? 'product__image-loaded' : 'product__image-loading'} onLoad={() => setIsLoaded(true)} alt={product.title} />
       </div>
       <div className="product__detail">
-        <div className="product__detail-title">{data.title}</div>
+        <div className="product__detail-title">{product.title}</div>
         <div className="product__detail-description">
-          {data.description}
+          {product.description}
         </div>
-        <div className="product__detail-price">${data.price}</div>
+        <div className="product__detail-price">${product.price}</div>
         <div className="product__detail-actions">
         { 
           !added ?
@@ -43,6 +62,8 @@ const Product = ({data}) => {
         }
         </div>
       </div>
+      </React.Fragment>
+      : <Preloader/>}
     </div>
   )
 }

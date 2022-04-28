@@ -8,8 +8,8 @@ const AuthPage = () => {
   const [form, setForm] = useState({email:'', password:'', admin: false});
   const {login, logout} = useContext(AuthContext);
   const [loginError, setLoginError] = useState(false);
-  const hasLogin = form.email,
-        hasPassword = form.password;
+  const hasLogin = form.email;
+  const hasPassword = form.password;
 
   const inputHandler = (event) => {
     setForm({...form, [event.target.name]: event.target.value})
