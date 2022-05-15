@@ -50,8 +50,8 @@ export function removeFromCartFn(id) {
   const cartProducts = localStorage.getItem(`cartProducts-${userId}`).split(',') || []
 
   if (cartProducts.length) {
-    const filteredProducts = cartProducts.filter(item => {
-      return Number(item) !== id
+    let filteredProducts = cartProducts.filter(item => {
+      return item !== id
     })
 
     localStorage.setItem(`cartProducts-${userId}`, filteredProducts)

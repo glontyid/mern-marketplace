@@ -1,9 +1,8 @@
-import { getItemsFromStorage } from "../helpers/helpers";
 import { MARKET_ACTIONS } from "./variables";
 
 const initialState = {
   catalogProducts: [],
-  cartItems: getItemsFromStorage() || [],
+  cartItems: [],
   selectedProduct: null,
   loading: false
 }

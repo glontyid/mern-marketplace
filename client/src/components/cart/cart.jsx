@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import CartItem from "./cart-item/cart-item";
 import CartDetail from "./cart-menu/cart-detail";
 import {cartSum, getItemsFromStorage, getProductsId} from "../../helpers/helpers";
@@ -7,13 +7,12 @@ import { getCartItems } from '../../redux/actions';
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const cartProducts = useSelector(state => state.marketReducer.cartItems) || [];
   const cartItems = getItemsFromStorage() || [];
 
   useEffect(() => {
-    dispatch(getCartItems(cartItems))
-  }, [dispatch])
-
-  const cartProducts = useSelector(state => state.marketReducer.cartItems) || [];
+    dispatch(getCartItems(cartItems));
+  }, [])
 
   return (
     <div className="cart">
@@ -25,4 +24,4 @@ const Cart = () => {
   )
 }
 
-export default Cart
+export default Cart;

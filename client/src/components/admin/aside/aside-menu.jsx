@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import './aside-menu.scss';
+import './aside-menu-admin.scss';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getItemsFromStorage } from '../../helpers/helpers';
 import { getCartItems } from '../../redux/actions';
 
-const AsideMenu = () => {
+const AsideMenuAdmin = () => {
   const cartProductsCount = useSelector((state) => state.marketReducer.cartItems.length);
   const dispatch = useDispatch();
   const cartItems = getItemsFromStorage() || [];
@@ -28,4 +28,4 @@ const AsideMenu = () => {
   )
 }
 
-export default AsideMenu;
+export default AsideMenuAdmin;

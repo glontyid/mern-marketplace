@@ -29,8 +29,6 @@ const Profile = () => {
         age: response.data.age
       })
 
-      console.log(response.data)
-
       axios.get(`/api/profile/history`, {params: {cart: response.data.cart}}, {headers: {contentType: 'application/json'}})
       .then(resp => {
         setCart(resp.data)
@@ -44,7 +42,7 @@ const Profile = () => {
     setForm({...form, [event.target.name]: event.target.value})
   }
 
-  const changeProfile = useCallback(async () => {
+  const changeProfile = async () => {
     try {
       await axios.put(`api/profile/change/${userId}/`, {userId, ...form},
       {
@@ -56,7 +54,7 @@ const Profile = () => {
     } catch (error) {
       statusHandler('error')
     }
-  }, [userId, form])
+  }
 
   function statusHandler(status) {
     setFormStatus(status)
@@ -112,7 +110,7 @@ const Profile = () => {
               return <StoryItem key={item._id} data={item}/>
             })
             : 
-            'Вы ещё не покупали товары'
+            'Вы ещё не совершали покупок'
             }
           </div>
         </div>

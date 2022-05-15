@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Switch, Route, Redirect} from 'react-router-dom';
-import Product from './components/product/product';
 import Preloader from './components/common/preloader/preloader';
-import AdminPage from './pages/admin-page/admin-page';
+import AdminPage from './pages/admin-page/products/admin-page-products';
 import AuthPage from './pages/auth-page/auth-page';
 import CartPage from './pages/cart-page/cart-page';
 import MainPage from './pages/main-page/main-page';

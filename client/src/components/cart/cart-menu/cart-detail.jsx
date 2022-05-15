@@ -1,18 +1,20 @@
 import axios from 'axios';
 import React, {useState} from 'react';
-import { useCallback, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import {Link} from "react-router-dom";
 import { AuthContext } from '../../../context/auth-context';
 import { clearCartFn } from '../../../helpers/helpers';
 import { clearCartItems } from '../../../redux/actions';
 import Alert from '../../common/alert/alert';
 
-const CartDetail = ({sum, ids}) => {
+const CartDetail = ({ids, sum}) => {
   const {userId} = useContext(AuthContext);
   const dispatch = useDispatch();
   const [activePopup, setActivePopup] = useState(false);
-  const addCartHandler = useCallback(async (user, ids) => {
+  const history = useHistory();
+
+  const addCartHandler = async (user, ids) => {
     try {
       await axios.put(`api/cart/order/${user}`, {user, ids},
       {
@@ -26,7 +28,7 @@ const CartDetail = ({sum, ids}) => {
     } catch (error) {
       console.log(error);
     }
-  },[])
+  }
 
   function popupHandler() {
     setActivePopup(true);
@@ -39,7 +41,7 @@ const CartDetail = ({sum, ids}) => {
   return (
     <div className="cart-detail">
       <Alert text='Спасибо за покупку :)' activePopup={activePopup} />
-      <Link to="/" className="cart__back">Вернуться к выбору товаров</Link>
+      <button onClick={() => history.goBack()} className="cart__back">Назад</button>
       <div className="cart-detail__wrapper">
         <div className="cart-detail__cart-sum">Общая сумма товаров: ${sum.toFixed(2)}</div>
         <div className="cart-detail__payment">
